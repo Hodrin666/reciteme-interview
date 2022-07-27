@@ -12,6 +12,7 @@
     "@tanstack/react-query": "^4.0.10",
     "@tanstack/react-query-devtools": "^4.0.10",
     "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "axios": "^0.27.2",
     "eslint-plugin-react": "^7.30.1",
     "next": "12.2.3",
     "react": "18.2.0",
