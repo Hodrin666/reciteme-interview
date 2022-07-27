@@ -2,13 +2,17 @@
  * Module dependencies.
  */
 
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 import Table from 'components/table';
 import useGetAllCapsules, { fetchCapsules } from 'hooks/getAllCapsules';
+import { useFindOneCapsule } from 'hooks/getOneCapsule';
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import {
+	ChangeEvent,
+	ChangeEventHandler,
+	FormEventHandler,
+	useState,
+} from 'react';
 import styled from 'styled-components';
 import { device } from 'theme';
 
@@ -30,18 +34,19 @@ const Container = styled.section`
  */
 
 const Home: NextPage = () => {
-	const mutation = useMutation(newTodo => {
-		return (
-			axios.post('https://api.spacexdata.com/v4/capsules/query', {
-				query: newTodo,
-			}),
-			{
-				onMutate: async (newTodo: string) => {
-					console.log(newTodo);
-				},
-			}
-		);
-	});
+	const { mutateAsync } = useFindOneCapsule();
+	const [id, setId] = useState<string>('');
+
+	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+		setId(event?.target?.value);
+	};
+
+	const handleFormSubmit = async () => {
+		event?.preventDefault();
+		try {
+			const data = await mutateAsync(id);
+		} catch (error) {}
+	};
 
 	return (
 		<Container>
@@ -59,14 +64,9 @@ const Home: NextPage = () => {
 			</ul>
 			<Table dataHook={useGetAllCapsules} />
 
-			<form
-				onClick={() => {
-					event?.preventDefault();
-					mutation.mutate(event?.target!.id.value);
-				}}
-			>
-				<input type="text" id="id" />
-				<button type="submit">{'Get Capsule'}</button>
+			<form onSubmit={handleFormSubmit}>
+				<input type="text" value={id} onChange={handleChange} />
+				<button type="submit">{'Get Capsule by update message'}</button>
 			</form>
 		</Container>
 	);
@@ -77,6 +77,3 @@ const Home: NextPage = () => {
  */
 
 export default Home;
-function newData() {
-	throw new Error('Function not implemented.');
-}
