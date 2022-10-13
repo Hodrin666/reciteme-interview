@@ -31,7 +31,7 @@ const Home: NextPage = () => {
 			<ul>
 				<li>
 					<Link href="/">
-						<a>Home</a>
+						<a>Homefdsjflsdjfklsljfsfsklslk</a>
 					</Link>
 				</li>
 				<li>
